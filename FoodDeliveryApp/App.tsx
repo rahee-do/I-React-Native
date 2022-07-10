@@ -46,9 +46,7 @@ function App() {
               component={HomeScreen}
               options={{title: 'Overview'}}
           />
-          <Stack.Screen name="Details">
-            {props => <DetailsScreen {...props} />}
-          </Stack.Screen>
+          <Stack.Screen name="Details" component={DetailsScreen} />
         </Stack.Navigator>
       </NavigationContainer>
   );
