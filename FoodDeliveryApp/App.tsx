@@ -17,10 +17,15 @@ function HomeScreen({navigation}: HomeScreenProps) {
     navigation.navigate('Details');
   }, [navigation]);
   return (
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-        <TouchableHighlight onPress={onClick}>
-          <Text>Home Screen</Text>
-        </TouchableHighlight>
+      <View style={{flexDirection: 'row'}}>
+          <View style={{height: 300, flex: 5, backgroundColor: 'hotpink', alignItems: 'flex-end', justifyContent: 'flex-start'}}>
+            <TouchableHighlight onPress={onClick} style={{paddingHorizontal: 10, paddingVertical: 5, backgroundColor: '#fff', opacity: 0.7}}>
+              <Text>Home Screen</Text>
+            </TouchableHighlight>
+          </View>
+          <View style={{flex: 2, backgroundColor: 'pink'}}>
+              <Text>Second</Text>
+          </View>
       </View>
   );
 }
