@@ -1,3 +1,4 @@
+[Rahido. Notion Roadmap](https://www.notion.so/cfaf7ee4a8a34341a3f9206094a49c65?v=b1c7436c439742f6bff9302452e6f35c)
 [Delivery icons created by dreamicons - Flaticon](https://www.flaticon.com/free-icons/delivery)
 
 # 첫 시작(setting)
