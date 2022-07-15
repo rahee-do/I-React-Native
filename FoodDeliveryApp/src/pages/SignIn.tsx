@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from 'react';
+import React, {useCallback, useState, useRef} from 'react';
 import {
   StyleSheet,
   Alert,
@@ -7,10 +7,16 @@ import {
   TextInput,
   View,
 } from 'react-native';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../App';
 
-function SingIn() {
+type SingInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
+
+function SingIn({navigation}: SingInScreenProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const emailRef = useRef<TextInput | null>(null); // Typescirpt: <TextInput | null> -> generic
+  const passwordRef = useRef<TextInput | null>(null);
 
   const onChangeEmail = useCallback((text: string): void => {
     setEmail(text);
@@ -19,10 +25,21 @@ function SingIn() {
     setPassword(text);
   }, []);
   const onSubmit = useCallback(() => {
-    Alert.alert('알림', '안녕~');
-  }, []);
+    // Alert.alert('알림', '안녕~');
+    if (!email || !email.trim()) {
+      return Alert.alert('Notice', '이메일을 입력해주세요.');
+    }
+    if (!password || !password.trim()) {
+      return Alert.alert('Notice', '비밀번호를 입력해주세요.');
+    }
+    Alert.alert('Notice', '로그인 되었습니다.');
+  }, [email, password]);
 
   const canGoNext = email && password;
+
+  const toSingUp = useCallback(() => {
+    navigation.navigate('SignUp');
+  }, [navigation]);
 
   return (
     <View>
@@ -31,7 +48,19 @@ function SingIn() {
         <TextInput
           style={styles.labelTextInput}
           placeholder="이메일을 입력해주세요."
+          value={email}
           onChangeText={onChangeEmail}
+          importantForAutofill="yes"
+          autoComplete="email"
+          textContentType="emailAddress"
+          returnKeyType="next"
+          keyboardType="email-address"
+          ref={emailRef}
+          onSubmitEditing={() => {
+            passwordRef.current?.focus();
+          }}
+          clearButtonMode="while-editing"
+          blurOnSubmit={false}
         />
       </View>
       <View style={styles.inputWrapper}>
@@ -39,7 +68,23 @@ function SingIn() {
         <TextInput
           style={styles.labelTextInput}
           placeholder="비밀번호를 입력해주세요."
+          value={password}
           onChangeText={onChangePassword}
+          importantForAutofill="yes"
+          autoComplete="password"
+          textContentType="password"
+          returnKeyType="next"
+          keyboardType="email-address"
+          ref={passwordRef}
+          onSubmitEditing={() => {
+            if (!canGoNext) {
+              emailRef.current?.focus();
+            } else {
+              onSubmit();
+            }
+          }}
+          clearButtonMode="while-editing"
+          secureTextEntry
         />
       </View>
       <View style={styles.buttonZone}>
@@ -53,8 +98,8 @@ function SingIn() {
           disabled={!canGoNext}>
           <Text style={styles.loginButtonText}>로그인</Text>
         </Pressable>
-        <Pressable onPress={onSubmit} style={styles.loginButton}>
-          <Text style={styles.loginButtonText}>회원가입하기</Text>
+        <Pressable onPress={toSingUp}>
+          <Text>회원가입하기</Text>
         </Pressable>
       </View>
     </View>

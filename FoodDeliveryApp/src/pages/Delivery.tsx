@@ -7,10 +7,14 @@ const Stack = createNativeStackNavigator();
 
 function Delivery() {
   return (
-      <Stack.Navigator>
-          <Stack.Screen name='Ing' component={Ing} options={{headerShown: false}} />
-          <Stack.Screen name='Complete' component={Complete} options={{headerShown: false}} />
-      </Stack.Navigator>
+    <Stack.Navigator>
+      <Stack.Screen name="Ing" component={Ing} options={{headerShown: false}} />
+      <Stack.Screen
+        name="Complete"
+        component={Complete}
+        options={{headerShown: false}}
+      />
+    </Stack.Navigator>
   );
 }
 export default Delivery;
