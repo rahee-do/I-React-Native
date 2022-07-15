@@ -19,10 +19,10 @@ function SingIn({navigation}: SingInScreenProps) {
   const passwordRef = useRef<TextInput | null>(null);
 
   const onChangeEmail = useCallback((text: string): void => {
-    setEmail(text);
+    setEmail(text.trim());
   }, []);
   const onChangePassword = useCallback((text: string): void => {
-    setPassword(text);
+    setPassword(text.trim());
   }, []);
   const onSubmit = useCallback(() => {
     // Alert.alert('알림', '안녕~');
