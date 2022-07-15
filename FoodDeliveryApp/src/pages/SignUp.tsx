@@ -1,6 +1,5 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {
-  KeyboardAvoidingView,
   Alert,
   Platform,
   Pressable,
@@ -11,6 +10,7 @@ import {
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../App';
+import DismissKeyboardView from '../components/DismissKeyBoardView';
 // import DismissKeyboardView from '../components/DismissKeyboardView';
 
 type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
@@ -57,11 +57,12 @@ function SignUp({navigation}: SignUpScreenProps) {
     }
     console.log(email, name, password);
     Alert.alert('알림', '회원가입 되었습니다.');
+    navigation.navigate('SignIn');
   }, [email, name, password]);
 
   const canGoNext = email && name && password;
   return (
-    <KeyboardAvoidingView behavior="position">
+    <DismissKeyboardView behavior="position">
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>이메일</Text>
         <TextInput
@@ -123,7 +124,7 @@ function SignUp({navigation}: SignUpScreenProps) {
           <Text style={styles.loginButtonText}>회원가입</Text>
         </Pressable>
       </View>
-    </KeyboardAvoidingView>
+    </DismissKeyboardView>
   );
 }
 

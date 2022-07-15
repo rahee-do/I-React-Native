@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../App';
+import DismissKeyboardView from '../components/DismissKeyBoardView';
 
 type SingInScreenProps = NativeStackScreenProps<RootStackParamList, 'SignIn'>;
 
@@ -42,7 +43,7 @@ function SingIn({navigation}: SingInScreenProps) {
   }, [navigation]);
 
   return (
-    <View>
+    <DismissKeyboardView>
       <View style={styles.inputWrapper}>
         <Text style={styles.labelText}>이메일</Text>
         <TextInput
@@ -76,13 +77,7 @@ function SingIn({navigation}: SingInScreenProps) {
           returnKeyType="next"
           keyboardType="email-address"
           ref={passwordRef}
-          onSubmitEditing={() => {
-            if (!canGoNext) {
-              emailRef.current?.focus();
-            } else {
-              onSubmit();
-            }
-          }}
+          onSubmitEditing={onSubmit}
           clearButtonMode="while-editing"
           secureTextEntry
         />
@@ -102,7 +97,7 @@ function SingIn({navigation}: SingInScreenProps) {
           <Text>회원가입하기</Text>
         </Pressable>
       </View>
-    </View>
+    </DismissKeyboardView>
   );
 }
 
