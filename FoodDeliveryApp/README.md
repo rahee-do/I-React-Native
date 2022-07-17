@@ -337,10 +337,41 @@ npm i react-native-keyboard-aware-scrollview
 - react-native-keyboard-aware-scroll-view 라이브러리는 타입이 있음
 
 types/react-native-keyboard-aware-scroll-view
-```
+```typescript jsx
+declare module 'react-native-keyboard-aware-scrollview' {
+  import * as React from 'react';
+  import {Constructor, ViewProps} from 'react-native';
+
+  class KeyboardAwareScrollViewComponent extends React.Component<ViewProps> {}
+  const KeyboardAwareScrollViewBase: KeyboardAwareScrollViewComponent &
+    Constructor<any>;
+  class KeyboardAwareScrollView extends KeyboardAwareScrollViewComponent {}
+  export {KeyboardAwareScrollView};
+}
 ```
 src/components/DismissKeyBoardView.tsx
 ```typescript jsx
+import React from 'react';
+import {
+  TouchableWithoutFeedback,
+  Keyboard,
+  StyleProp,
+  ViewStyle,
+} from 'react-native';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview';
+
+const DismissKeyboardView: React.FC<{
+  children: React.ReactNode;
+  style?: StyleProp<ViewStyle>;
+}> = ({children, ...props}) => (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+          <KeyboardAwareScrollView {...props} style={props.style}>
+            {children}
+          </KeyboardAwareScrollView>
+        </TouchableWithoutFeedback>
+);
+export default DismissKeyboardView;
+
 ```
 ## 서버 요청 보내기(ch2)
 
