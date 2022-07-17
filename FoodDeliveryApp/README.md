@@ -408,7 +408,7 @@ function App() {
 }
 export default App;
 ```
-## 회원가입, 로그인
+## 회원가입, 로그인, 로그아웃
 액세스토큰/리프레시토큰을 받아서 다음 라이브러리로 저장
 ```shell
 npm install react-native-encrypted-storage
