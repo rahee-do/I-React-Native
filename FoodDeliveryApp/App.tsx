@@ -5,11 +5,11 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Settings from './src/pages/Settings';
 import Orders from './src/pages/Orders';
 import Delivery from './src/pages/Delivery';
-import {useState} from 'react';
 import SignIn from './src/pages/SignIn';
 import SignUp from './src/pages/SignUp';
-import {Provider} from 'react-redux';
+import {Provider, useSelector} from 'react-redux';
 import store from './src/store';
+import {RootState} from './src/store/reducer';
 
 export type LoggedInParamList = {
   Orders: undefined;
@@ -27,7 +27,9 @@ const Tab = createBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  // 리덕스에서 관리하는 상태 값으로 email 존재 여부로 로그인 여부 확인
+  const isLoggedIn = useSelector((state: RootState) => !!state.user.email);
+  // const [isLoggedIn, setLoggedIn] = useState(false);
   return (
     <Provider store={store}>
       <NavigationContainer>
