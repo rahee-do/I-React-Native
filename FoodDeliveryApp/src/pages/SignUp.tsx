@@ -11,7 +11,7 @@ import {
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../App';
 import DismissKeyboardView from '../components/DismissKeyBoardView';
-// import DismissKeyboardView from '../components/DismissKeyboardView';
+import axios from "axios";
 
 type SignUpScreenProps = NativeStackScreenProps<RootStackParamList, 'SignUp'>;
 
@@ -32,7 +32,7 @@ function SignUp({navigation}: SignUpScreenProps) {
   const onChangePassword = useCallback(text => {
     setPassword(text.trim());
   }, []);
-  const onSubmit = useCallback(() => {
+  const onSubmit = useCallback(async () => {
     if (!email || !email.trim()) {
       return Alert.alert('알림', '이메일을 입력해주세요.');
     }
@@ -56,13 +56,24 @@ function SignUp({navigation}: SignUpScreenProps) {
       );
     }
     console.log(email, name, password);
+    try {
+      // await 비동기 promise.
+      // http 메서드 : get, put, patch, post, delete, head, options
+      const response = await axios.post('/user', {email, name, password});
+      console.log(response);
+    } catch (error) {
+      console.error(error.response);
+    } finally {
+      // 무조건 실행되는 문
+    }
     Alert.alert('알림', '회원가입 되었습니다.');
+    // 회원가입 후 로그인 화면으로 이동 처리
     navigation.navigate('SignIn');
-  }, [email, name, password]);
+  }, [email, name, navigation, password]);
 
   const canGoNext = email && name && password;
   return (
-    <DismissKeyboardView behavior="position">
+    <DismissKeyboardView>
       <View style={styles.inputWrapper}>
         <Text style={styles.label}>이메일</Text>
         <TextInput
