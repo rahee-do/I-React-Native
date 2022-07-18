@@ -65,14 +65,15 @@ function SignUp({navigation}: SignUpScreenProps) {
       setLoading(true);
       // await 비동기 promise.
       // http 메서드 : get, put, patch, post, delete, head, options
+      // 서버 주소 : localhost:3105/user (localhost IP : 127.0.0.1:3105/user)
       const response = await axios.post('/user', {email, name, password});
       console.log(response);
       Alert.alert('Notice', '회원가입 되었습니다.');
     } catch (error) {
       const errorResponse = (error as AxiosError).response;
-      // console.error(errorResponse);
+      console.error();
       if (errorResponse) {
-        Alert.alert('Notice', errorResponse.data.message);
+        Alert.alert('Notice', (errorResponse.data as any).message);
       }
     } finally {
       // 무조건 실행되는 문
